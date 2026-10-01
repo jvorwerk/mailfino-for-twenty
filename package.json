@@ -1,6 +1,6 @@
 {
   "name": "@mailfino/twenty-connector",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Transfer all or selected Twenty People to mailfino using the existing CRM import profile.",
   "type": "module",
   "license": "MIT",
