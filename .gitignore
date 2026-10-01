@@ -1,0 +1,6 @@
+/node_modules
+/.twenty
+/.yarn/install-state.gz
+/coverage
+*.tsbuildinfo
+.env*

@@ -1,0 +1,49 @@
+{
+  "name": "@mailfino/twenty-connector",
+  "version": "0.4.0",
+  "description": "Transfer all or selected Twenty People to mailfino using the existing CRM import profile.",
+  "type": "module",
+  "license": "MIT",
+  "author": "4OfficeAutomation GmbH",
+  "homepage": "https://www.mailfino.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jvorwerk/mailfino-for-twenty.git"
+  },
+  "bugs": {
+    "url": "https://mynewsletterrocks.freshdesk.com/support/tickets/new"
+  },
+  "keywords": [
+    "twenty-app",
+    "twenty-crm",
+    "mailfino",
+    "email-marketing",
+    "crm-integration"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": "^24.5.0",
+    "twenty": ">=2.34.0 <3.0.0"
+  },
+  "packageManager": "yarn@4.13.0",
+  "scripts": {
+    "build": "twenty dev:build --tarball",
+    "fixture:deploy": "node scripts/deploy-fixture.mjs",
+    "marketplace:build": "node scripts/clean-marketplace-output.mjs && twenty dev:build && node scripts/check-marketplace-package.mjs",
+    "marketplace:preflight": "node scripts/check-marketplace-endpoints.mjs",
+    "marketplace:check": "node scripts/check-marketplace-package.mjs",
+    "test": "vitest run",
+    "twenty": "twenty",
+    "typecheck": "tsc --noEmit -p tsconfig.spec.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.0",
+    "twenty-client-sdk": "2.40.0",
+    "twenty-sdk": "2.40.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  }
+}

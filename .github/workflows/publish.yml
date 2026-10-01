@@ -1,0 +1,42 @@
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      dist_tag:
+        description: npm distribution tag
+        type: choice
+        options: [beta, latest]
+        default: beta
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.5.0'
+      - run: npm install --global npm@11.5.1 corepack@0.34.0
+      - run: corepack yarn install --immutable
+      - run: corepack yarn typecheck
+      - run: corepack yarn test
+      - run: corepack yarn marketplace:build
+      - run: corepack yarn marketplace:preflight
+      - name: Publish verified artifact with provenance
+        working-directory: .twenty/output
+        env:
+          DIST_TAG: ${{ inputs.dist_tag }}
+        run: npm publish --access public --provenance --tag "$DIST_TAG"

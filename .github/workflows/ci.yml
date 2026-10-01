@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.5.0'
+      - run: npm install --global corepack@0.34.0
+      - run: corepack yarn install --immutable
+      - run: corepack yarn typecheck
+      - run: corepack yarn test
+      - run: corepack yarn marketplace:build
+      - run: npm pack --dry-run ./.twenty/output
